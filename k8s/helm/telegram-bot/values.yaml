@@ -1,0 +1,19 @@
+replicaCount: 1
+image:
+  repository: telegram-bot
+  tag: "latest"
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+bot:
+  token: ""
+database:
+  url: ""

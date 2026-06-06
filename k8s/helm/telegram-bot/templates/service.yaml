@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-telegram-bot
+spec:
+  selector:
+    app: telegram-bot
+  ports:
+  - port: {{ .Values.service.port }}
+    targetPort: 8080
+  type: {{ .Values.service.type }}

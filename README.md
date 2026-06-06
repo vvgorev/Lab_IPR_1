@@ -5,22 +5,24 @@
 
 ## Структура проекта
 
-├── app/ # Исходный код приложения
-│ ├── src/
-│ └── tests/
+├── src/ # Исходный код приложения
+│ ├── init.py
+│ └── calculator.py
+── tests/ # Unit-тесты (pytest)
+│ ├── init.py
+│ └── test_calculator.py
 ├── k8s/ # Манифесты Kubernetes
-│ ├── kustomization/ # Конфигурация через Kustomize
-│ │ ├── base/
-│ │ └── overlays/
-│ │ ├── dev/
-│ │ └── prod/
-│ └── helm/ # Конфигурация через Helm
+│ ├── kustomization/ # Управление через Kustomize
+│ │ ├── base/ # Базовые манифесты
+│ │ └── overlays/ # Окружения 
+│ ── helm/ # Управление через Helm
 │ └── telegram-bot/
 │ ├── Chart.yaml
 │ ├── values.yaml
 │ └── templates/
-├── docker-compose.yml # Локальный запуск для разработки
+├── .gitlab-ci.yml # Конфигурация CI/CD пайплайна
 ├── Dockerfile # Образ приложения
+├── requirements.txt # Python-зависимости
 ├── .gitignore
 └── README.md
 
@@ -80,9 +82,9 @@ kubectl apply -k k8s/kustomization/overlays/dev
 ```
 ### Helm:
 ```bash
-helm upgrade telegram-bot ./k8s/helm/telegram-bot \
-  -f ./k8s/helm/telegram-bot/values-dev.yaml \
-  --set bot.token="NEW_TOKEN"
+helm upgrade --install telegram-bot ./k8s/helm/telegram-bot \
+  --namespace default \
+  --set bot.token="YOUR_BOT_TOKEN"
 ```
 ## Откат изменений (Helm)
 ```bash
